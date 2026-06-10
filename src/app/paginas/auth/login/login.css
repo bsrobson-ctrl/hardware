@@ -1,0 +1,190 @@
+.login-painel-esquerdo{
+    background-color: var(--cor-escuro);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 48px;
+    color: var(--cor-fundo);
+}
+.login-painel-esquerdo .logo{
+    color: var(--cor-fundo);
+}
+.linha-principal{
+    width: 48px;
+    height: 4px;
+    background: linear-gradient(to right, var(--cor-principal), transparent);
+    border-radius: 4px;
+    margin-bottom: var(--espaco-md);
+}
+.login-frase{
+    font-family: var(--fonte-titulo);
+    font-size: 48px;
+    line-height: 1.2;
+    color: var(--cor-acento);
+    text-align: center;
+    margin-bottom: 20px;
+}
+.login-frase span{
+    color: var(--cor-principal);
+}
+.login-rodape-painel{
+    font-size: 14px;
+    color: #555;
+}
+.fundo-pontos{
+    position: relative;
+    overflow: hidden;
+}
+/* .fundo-pontos::before{
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(48, 46, 46, 0.788) 1px, transparent 1px);
+    background-size: 28px 28px;
+    pointer-events: none;
+} */
+.login-painel-direito{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 48px;
+    background-color: var(--cor-fundo);
+}
+.login-form-card{
+    width: 100%;
+    max-width: 400px;
+}
+.login-titulo{
+    font-family: var(--fonte-titulo);
+    font-size: 34px;
+    margin-bottom: var(--espaco-sm);
+}
+.login-subtitulo{
+    font-size: 16px;
+    color: var(--cor-texto-suave);
+    margin-bottom: var(--espaco-xl);
+}
+.login-form{
+    display: flex;
+    flex-direction: column;
+    gap: var(--espaco-md);
+}
+.login-esqueceu{
+    font-size: 14px;
+    color: var(--cor-preco);
+    text-align: right;
+    display: block;
+    transition: var(--transition);
+}
+.login-esqueceu:hover{
+    opacity: 0.5;
+}
+.login-btn-submit{
+    width: 100%;
+    margin-top: var(--espaco-sm);
+    padding: 16px;
+    font-size: 16px;
+    background: var(--gradiente-sunset);
+    border-radius: var(--raio-pilula);
+}
+.login-cadastro-link{
+    text-align: center;
+    margin-top: var(--espaco-lg);
+    font-size: 14px;
+    color: var(--cor-texto-suave);
+}
+.login-cadastro-link a{
+    color: var(--cor-preco);
+    font-weight: 500;
+    transition: all var(--transition);
+}
+.login-cadastro-link a:hover{
+    opacity: 0.5;
+}
+.card-brilho{
+    position: relative;
+    overflow: hidden;
+}
+.card-brilho::after{
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at top left, rgba(232, 93, 38, 0.075), transparent 60%);
+    opacity: 0;
+    transition: all var(--transition);
+    pointer-events: none;
+}
+/* campos de formulario */
+.campo-grupo{
+    display: flex;
+    flex-direction: column;
+    gap: 6px
+}
+.campo-label{
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--cor-preco);
+    letter-spacing: 0.3px;
+}
+.campo-input{
+    width: 100%;
+    padding: 13px 16px;
+    border: 1.5px solid var(--cor-borda);
+    border-radius: var(--raio-sm);
+    font-size: 14px;
+    color: black;
+    background-color: white;
+    transition: all var(--transition);
+    outline: none;
+}
+.campo-input:focus{
+    border-color: var(--cor-principal);
+    box-shadow: 0 0 10px 3px rgba(232, 93, 38, 0.25);
+}
+.campo-input::placeholder{
+    color: #bbb;
+}
+
+/* botões */
+.btn-primario{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: var(--cor-principal);
+    color: white;
+    /* border: none; */
+    padding: 14px 28px;
+    /* border-radius: var(--raio-pilula); */
+    font-size: 15px;
+    transition: all var(--transition);
+    cursor: pointer;
+    border-radius: var(--raio-pill);
+    border: 1.5px solid var(--cor-borda);
+}
+.btn-primario:hover{
+    background-color: var(--cor-principal-hover);
+    transform: translateY(-2px);
+}
+.btn-secundario{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: transparent;
+    color: var(--cor-texto);
+    border: 1.5px solid var(--cor-borda);
+    padding: 14px 28px;
+    border-radius: var(--raio-pilula);
+    font-size: 15px;
+    transition: all var(--transition);
+    cursor: pointer;
+}
+.btn-secundario:hover{
+    background-color: var(--cor-principal);
+    color: var(--cor-principal );
+    transform: translateY(-2px);
+}

@@ -5,4 +5,5 @@ export interface HardwareModel{
     especificacao_principal: string;
     preco: number;
     imagem_url: string;
+    titulo: string
 }

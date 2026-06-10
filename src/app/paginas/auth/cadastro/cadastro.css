@@ -1,0 +1,175 @@
+.cadastro-pagina{
+    min-height: 100vh;
+    background-color: var(--cor-fundo);
+    display: flex;
+    flex-direction: column;
+}
+
+.cadastro-header{
+    background-color: var(--cor-escuro);
+    padding: 32px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.cadastro-header .logo{
+    color: var(--cor-fundo);
+}
+.cadastro-header-link{
+    font-size: 14px;
+    color: var(--cor-cinza);
+    transition: all var(--transition);
+}
+.cadastro-header-link:hover{
+    color: var(--cor-principal);
+}
+.cadastro-corpo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    flex: 1;
+}
+.cadastro-form-card{
+    width: 100%;
+    max-width: 520px;
+    background-color: var(--cor-escuro);
+    border: 8px solid var(--cor-preco);
+    border-radius: var(--raio);
+    padding: 48px;
+    box-shadow: var(--sombra-md);
+}
+.cadastro-titulo{
+    font-family: var(--fonte-titulo);
+    font-size: 30px;
+    margin-bottom: var(--espaco-sm);
+    color: var(--cor-texto);
+}
+.cadastro-subtitulo{
+    font-size: 14px;
+    color: var(--cor-acento);
+    margin-bottom: var(--espaco-xl);
+}
+.cadastro-form{
+    display: flex;
+    flex-direction: column;
+    gap: var(--espaco-md);
+}
+.campos-duplos{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--espaco-md);
+}
+.cadastro-termos{
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--cor-texto-suave);
+    margin-top: var(--espaco-sm);
+}
+.cadastro-termos input{
+    margin-top: 3px;
+    accent-color: var(--cor-principal);
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+}
+.cadastro-termos a{
+    color: var(--cor-acento);
+    transition: all var(--transition);
+}
+.cadastro-termos a:hover{
+    opacity: 0.75;
+}
+.cadastro-btn-submit{
+    width: 100%;
+    padding: 14px;
+    font-size: 14px;
+    margin-top: var(--espaco-sm);
+    background: var(--gradiente-sunset);
+    color: var(--cor-texto);
+    border-radius: var(--raio-pill);
+    border: 1.5px solid var(--cor-borda);
+}
+.cadastro-login-link{
+    text-align: center;
+    margin-top: var(--espaco-lg);
+    font-size: 14px;
+    color: var(--cor-texto-suave);
+}
+.cadastro-login-link a{
+    color: var(--cor-preco);
+}
+/* campos de formulario */
+.campo-grupo{
+    display: flex;
+    flex-direction: column;
+    gap: 6px
+}
+.campo-label{
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--cor-preco);
+    letter-spacing: 0.3px;
+}
+.campo-input{
+    width: 100%;
+    padding: 13px 16px;
+    border: 1.5px solid var(--cor-borda);
+    border-radius: var(--raio-sm);
+    font-size: 14px;
+    color: black;
+    background-color: white;
+    transition: all var(--transition);
+    outline: none;
+}
+.campo-input:focus{
+    border-color: var(--cor-principal);
+    box-shadow: 0 0 10px 3px rgba(232, 93, 38, 0.25);
+}
+.campo-input::placeholder{
+    color: #bbb;
+}
+* botões */
+.btn-primario{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: var(--cor-principal);
+    color: white;
+    /* border: none; */
+    padding: 14px 28px;
+    /* border-radius: var(--raio-pilula); */
+    font-size: 15px;
+    transition: all var(--transition);
+    cursor: pointer;
+    border-radius: var(--raio-pill);
+    border: 1.5px solid var(--cor-borda);
+}
+.btn-primario:hover{
+    background-color: var(--cor-principal-hover);
+    transform: translateY(-2px);
+}
+.btn-secundario{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: transparent;
+    color: var(--cor-texto);
+    /* border: 1.5px solid var(--cor-borda); */
+    padding: 14px 28px;
+    /* border-radius: var(--raio-pilula); */
+    font-size: 15px;
+    transition: all var(--transition);
+    cursor: pointer;
+    border-radius: var(--raio-pill);
+    border: 1.5px solid var(--cor-borda);
+}
+.btn-secundario:hover{
+    background-color: var(--cor-principal);
+    color: var(--cor-principal );
+    transform: translateY(-2px);
+}

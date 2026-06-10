@@ -307,7 +307,7 @@ input {
 
 .grid-hardware {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(300px, 1fr));
   gap: 32px;
 }
 
@@ -321,6 +321,7 @@ input {
   flex-direction: column;
   transition: transform var(--transicao), border-color var(--transicao), box-shadow var(--transicao);
   animation: subirFadeIn 0.5s ease both;
+  height: 100%;
 }
 
 .card-hardware:hover {
@@ -336,6 +337,7 @@ input {
   overflow: hidden;
   position: relative;
   border-bottom: 1px solid var(--cor-borda);
+  
 }
 
 .card-imagem-placeholder {
@@ -348,6 +350,7 @@ input {
   color: rgba(255, 255, 255, 0.05);
   background: linear-gradient(135deg, #18181b 0%, #09090b 100%);
   transition: color var(--transicao), transform var(--transicao);
+  
 }
 
 .card-hardware:hover .card-imagem-placeholder {
