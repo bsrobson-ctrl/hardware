@@ -706,3 +706,54 @@ input {
   }/* You can add global styles to this file, and also import other style files */
 
 }
+/* busca inicio */
+.hardware-controles-inicio {
+  padding: 24px 0;
+  display: grid;
+  grid-template-columns: (2, 1fr);
+  gap: 20px;
+  border-bottom: 1px solid var(--cor-borda);
+  background-color: var(--cor-fundo);
+  position: sticky;
+  top: 73px;
+  z-index: 90;
+  animation: fadeIn 0.4s ease both;
+}
+
+.busca-container-1 {
+  position: relative;
+  max-width: 480px;
+  text-align: left;
+}
+.busca-container-2 {
+  position: relative;
+  max-width: 480px;
+  text-align: right;
+}
+
+.busca-icone {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--cor-cinza);
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.busca-input {
+  width: 100%;
+  padding: 12px 16px 12px 44px;
+  border: 1.5px solid var(--cor-borda);
+  border-radius: var(--raio-pill);
+  font-size: 14px;
+  color: var(--cor-texto);
+  background-color: var(--cor-escuro);
+  outline: none;
+  transition: all var(--transicao);
+}
+
+.busca-input:focus {
+  border-color: var(--cor-acento);
+  box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.15);
+}
