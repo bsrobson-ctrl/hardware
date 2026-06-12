@@ -15,14 +15,14 @@
             <div class="login-form-card card-brilho">
                 <h1 class="login-titulo">Bem vindo de volta!</h1>
                 <p class="login-subtitulo">Entre com sua conta para continuar</p>
-                <form action="#" class="login-form">
+                <form class="login-form" [formGroup]="loginForm" (ngSubmit) = "onSubmit()">
                     <div class="campo-grupo">
                         <label for="email" class="campo-label">E-mail</label>
-                        <input type="email" id="email" class="campo-input" placeholder="seu@email.com" required>
+                        <input type="email" id="email" class="campo-input" placeholder="seu@email.com" required formControlName="email">
                     </div>
                     <div class="campo-grupo">
                         <label for="senha" class="campo-label">Senha</label>
-                        <input type="password" id="senha" class="campo-input" placeholder="••••••••" required>
+                        <input type="password" id="senha" class="campo-input" placeholder="••••••••" required formControlName="password">
                         <a href="#" class="login-esqueceu">Esqueceu sua senha?</a>
                     </div>
 
