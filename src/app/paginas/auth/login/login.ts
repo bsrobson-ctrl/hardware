@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, input, signal } from '@angular/core';
 import { HardwareModel } from '../../../core/models/hardwareModel';
 import { Router, RouterLink } from "@angular/router";
 import { AuthService } from '../../../core/services/auth';
@@ -14,17 +14,23 @@ export class Login{
   private authService = inject(AuthService);
   private router = inject(Router);
 
+  estaCarregando = signal(false);
+
   loginForm = new FormGroup({
     email: new FormControl(""),
     password: new FormControl ("")
   })
 
   onSubmit (){
+    this.estaCarregando.set(true)
     const {email, password} = this.loginForm.getRawValue()
 
     this.authService.login(email!, password!).subscribe({
       next: () => alert("Login efutado com sucesso!"),
-      error: () => alert("Usuário ou senha inválidos")
+      error: () => {
+        this.estaCarregando.set(false);
+        alert("Usuário ou senha inválidos")
+      }
     })
   }
 }

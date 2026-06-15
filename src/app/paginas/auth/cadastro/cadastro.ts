@@ -1,11 +1,11 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { AuthService } from '../../../core/services/auth';
 import { Router } from '@angular/router';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-cadastro',
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './cadastro.html',
   styleUrl: './cadastro.css',
 })
@@ -13,18 +13,26 @@ export class Cadastro{
   private authService = inject(AuthService);
   private router = inject(Router);
 
-  loginForm = new FormGroup({
+estaCarregando = signal(false)
+
+  cadastroForm = new FormGroup({
     email: new FormControl(""),
     password: new FormControl (""),
     name: new FormControl (""),
   })
 
   onSubmit (){
-    const {email, password, name} = this.loginForm.getRawValue()
+    this.estaCarregando.set(true)
+    const {email, password, name} = this.cadastroForm.getRawValue()
 
     this.authService.cadastro(name!, email!, password!).subscribe({
-      next: () => alert("Cadastro efutado com sucesso!"),
-      error: () => alert("Dados inválidos")
+      next: () =>{
+        alert("Cadastro efutado com sucesso!")
+        this.router.navigate(['/login'])
+      },
+      error: () => {
+        this.estaCarregando.set(false)
+        alert("Dados inválidos")}
     })
   }
 }

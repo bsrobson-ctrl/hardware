@@ -6,6 +6,11 @@
         <li><a href="index.html" class="nav-link">Vídeos</a></li>
         <li><a routerLink="/" class="nav-link">Sobre</a></li>
       </ul>
-      <a routerLink="/login" class="btn-painel">Login</a>
+      @if (authService.isLoggedIn()) {
+        <a routerLink="/login" class="btn-painel">Painel Admin</a>
+        <button type="button" (click)="authService.logout()" class="btn-sair">Sair</button>
+      } @else {
+        <a routerLink="/login" class="btn-painel">Login</a>
+      }
     </nav>
   </header>

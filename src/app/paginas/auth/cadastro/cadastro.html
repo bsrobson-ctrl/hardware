@@ -1,10 +1,10 @@
 <main class="cadastro-corpo">
-            <div class="cadastro-form-card">
-                <h1 class="cadastro-titulo">Crie sua conta</h1>
-                <p class="cadastro-subtitulo">Junte-se a nossa comunidade</p>
+  <div class="cadastro-form-card">
+    <h1 class="cadastro-titulo">Crie sua conta</h1>
+    <p class="cadastro-subtitulo">Junte-se a nossa comunidade</p>
 
-                <form action="#" class="cadastro-form">
-                    <div class="campos-duplos">
+    <form class="cadastro-form" [formGroup]="cadastroForm" (ngSubmit)="onSubmit()">
+      <!-- <div class="campos-duplos">
                         <div class="campo-grupo">
                             <label class="campo-label" for="Nome">Nome</label>
                             <input type="text" id="nome" class="campo-input" placeholder="João" required>
@@ -13,32 +13,63 @@
                             <label class="campo-label" for="Sobrenome">Sobrenome</label>
                             <input type="text" id="sobrenome" class="campo-input" placeholder="Silva" required>
                         </div>
-                    </div>
+                    </div> -->
+      <div class="campo-grupo">
+        <label class="campo-label" for="Nome">Nome</label>
+        <input
+          formControlName="name"
+          type="text"
+          id="nome"
+          class="campo-input"
+          placeholder="João"
+          required
+        />
+      </div>
 
-                    <div class="campo-grupo">
-                            <label class="campo-label" for="E-mail">E-mail</label>
-                            <input type="email" id="email" class="campo-input" placeholder="seu@email.com" required>
-                    </div>
+      <div class="campo-grupo">
+        <label class="campo-label" for="E-mail">E-mail</label>
+        <input
+          formControlName="email"
+          id="email"
+          class="campo-input"
+          placeholder="seu@email.com"
+          required
+        />
+      </div>
 
-                    <div class="campo-grupo">
-                            <label class="campo-label" for="Senha">Senha</label>
-                            <input type="password" id="senha" class="campo-input" placeholder="Mínimo 8 caracteres" required>
-                    </div>
-
+      <div class="campo-grupo">
+        <label class="campo-label" for="Senha">Senha</label>
+        <input
+          formControlName="password"
+          type="password"
+          class="campo-input"
+          placeholder="Mínimo 8 caracteres"
+          required
+        />
+      </div>
+      <!-- 
                     <div class="campo-grupo">
                             <label class="campo-label" for="Confirmar">Confirmar Senha</label>
                             <input type="password" id="confirmar-senha" class="campo-input" placeholder="Confirme sua senha" required>
-                    </div>
+                    </div> -->
 
-                    <div class="cadastro-termos">
-                        <input type="checkbox" id="termos" required/>
-                        <label for="termos">Eu concordo com os <a href="#">Termos de Uso</a> e a <a href="#">Política de Privacidade</a> do TechHardware</label>
-                    </div>
+      <div class="cadastro-termos">
+        <input type="checkbox" id="termos" required />
+        <label for="termos"
+          >Eu concordo com os <a href="#">Termos de Uso</a> e a
+          <a href="#">Política de Privacidade</a> do TechHardware</label
+        >
+      </div>
 
-                    <button class="btn-primario cadastro-btn-submit" type="submit">Criar minha conta</button>
-                </form>
+      <button class="btn-primario cadastro-btn-submit" type="submit">
+        @if (estaCarregando()){
+            Cadastrando...
+        } @else {
+            Criar minha conta
+        }
+        </button>
+    </form>
 
-                <p class="cadastro-login-link">Já tem uma conta? <a href="../login/index.html">Entrar</a>
-                </p>
-            </div>
-        </main>
+    <p class="cadastro-login-link">Já tem uma conta? <a href="../login/index.html">Entrar</a></p>
+  </div>
+</main>
