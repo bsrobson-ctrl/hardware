@@ -1,0 +1,124 @@
+<div class="dashboard-pagina">
+
+  <!-- HEADER -->
+  <header class="dashboard-cabecalho">
+    <a routerLink="/" class="logo">Tech<span>Hardware</span></a>
+    <div class="dashboard-cabecalho-usuario">
+      <span class="usuario-saudacao">Painel Admin</span>
+      <div class="dashboard-avatar">A</div>
+      <button type="button" (click)="authService.logout()" class="btn-sair">Sair</button>
+    </div>
+  </header>
+
+  <!-- SIDEBAR -->
+  <aside class="dashboard-sidebar">
+    <p class="sidebar-secao-titulo">Menu</p>
+
+    <a routerLink="/admin" routerLinkActive="ativo" [routerLinkActiveOptions]="{exact: true}" class="sidebar-link">
+      <span class="sidebar-icone"><i class="fas fa-chart-line"></i></span> Visão Geral
+    </a>
+    <a routerLink="/vitrine" class="sidebar-link">
+      <span class="sidebar-icone"><i class="fas fa-store"></i></span> Vitrine
+    </a>
+    <a routerLink="/admin/novo-artigo" class="sidebar-link">
+      <span class="sidebar-icone"><i class="fas fa-plus"></i></span> Novo Produto
+    </a>
+
+    <p class="sidebar-secao-titulo">Conta</p>
+
+    <button type="button" (click)="authService.logout()" class="sidebar-link sidebar-link-btn">
+      <span class="sidebar-icone"><i class="fas fa-sign-out-alt"></i></span> Sair
+    </button>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="dashboard-conteudo">
+
+    <!-- STATS CARDS -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icone stat-icone-rosa"><i class="fas fa-box"></i></div>
+        <div class="stat-info">
+          <span class="stat-valor">{{ totalArtigos() }}</span>
+          <span class="stat-label">Total de produtos</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icone stat-icone-laranja"><i class="fas fa-check-circle"></i></div>
+        <div class="stat-info">
+          <span class="stat-valor">{{ totalPublicados() }}</span>
+          <span class="stat-label">Publicados</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icone stat-icone-roxo"><i class="fas fa-eye"></i></div>
+        <div class="stat-info">
+          <span class="stat-valor">14.2k</span>
+          <span class="stat-label">Visualizações</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABELA DE ARTIGOS -->
+    <div class="dashboard-secao">
+      <div class="dashboard-secao-header">
+        <h2 class="dashboard-secao-titulo">Produtos cadastrados</h2>
+        <a routerLink="/admin/novo-artigo" class="btn-primario">
+          <i class="fas fa-plus"></i> Novo produto
+        </a>
+      </div>
+
+      @if (articles().length === 0) {
+        <div class="tabela-vazia">
+          <i class="fas fa-box-open"></i>
+          <p>Nenhum produto cadastrado ainda.</p>
+          <a routerLink="/admin/novo-artigo" class="btn-primario">Criar primeiro produto</a>
+        </div>
+      } @else {
+        <div class="tabela-wrapper">
+          <table class="tabela">
+            <thead>
+              <tr>
+                <th>Produto</th>
+                <th>Tipo</th>
+                <th>Fabricante</th>
+                <th>Preço</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (item of articles(); track item.id) {
+                <tr>
+                  <td>
+                    <span class="tabela-titulo-artigo">{{ item.titulo }}</span>
+                    <span class="tabela-sub">{{ item.especificacao_principal | slice:0:50 }}...</span>
+                  </td>
+                  <td>
+                    <span class="badge badge-sunset">{{ item.tipo }}</span>
+                  </td>
+                  <td>
+                    <span class="tabela-fabricante">{{ item.fabricante }}</span>
+                  </td>
+                  <td>
+                    <span class="tabela-preco">{{ item.preco | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
+                  </td>
+                  <td>
+                    <div class="tabela-acoes">
+                      <a [routerLink]="['/admin/editar', item.id]" class="btn-acao">
+                        <i class="fas fa-pen"></i> Editar
+                      </a>
+                      <button type="button" class="btn-perigo" (click)="remover(item.id)">
+                        <i class="fas fa-trash"></i> Excluir
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    </div>
+
+  </main>
+</div>
