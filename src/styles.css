@@ -143,19 +143,35 @@ input {
 }
 
 .btn-painel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  appearance: none;
+  -webkit-appearance: none;
   background-color: transparent;
-  border: 1.5px solid var(--cor-texto);
-  color: var(--cor-texto);
+  border: 1.6px solid var(--cor-acento);
+  color: var(--cor-acento);
   padding: 8px 20px;
+  font: inherit;
   font-size: 14px;
   font-weight: 500;
   border-radius: var(--raio-pill);
+  text-decoration: none;
+  line-height: 1;
   transition: all var(--transicao);
 }
 
+button.btn-painel {
+  appearance: none;
+  -webkit-appearance: none;
+  border-style: solid;
+  outline: none;
+}
+
 .btn-painel:hover {
-  background-color: var(--cor-texto);
-  color: var(--cor-fundo);
+  color: var(--cor-preco);
+  border: 1.6px solid var(--cor-preco);
 }
 
 /* BANNER HERO DA SEÇÃO */
