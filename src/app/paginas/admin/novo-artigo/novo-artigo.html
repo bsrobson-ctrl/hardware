@@ -1,0 +1,189 @@
+<div class="editor-wrapper">
+
+  <!-- HEADER DO EDITOR -->
+  <header class="editor-header">
+    <a routerLink="/" class="logo">Tech<span>Hardware</span></a>
+    <nav class="editor-nav">
+      <a routerLink="/admin" class="editor-nav-voltar">
+        <i class="fas fa-arrow-left"></i> Voltar ao painel
+      </a>
+      <button type="button" class="btn-sair" (click)="onSubmit()">
+        @if (isSaving()) { Salvando... } @else if (modoEdicao()) { Salvar alterações } @else { Publicar produto }
+      </button>
+    </nav>
+  </header>
+
+  <!-- GRID EDITOR -->
+  <div class="editor-pagina" [formGroup]="artForm">
+
+    <!-- COLUNA PRINCIPAL -->
+    <div class="editor-coluna-principal">
+
+      <!-- CARD: Informações principais -->
+      <div class="editor-card">
+        <h2 class="editor-card-titulo">
+          {{ modoEdicao() ? 'Editar produto' : 'Novo produto' }}
+        </h2>
+
+        <div class="campo-grupo">
+          <label class="campo-label" for="titulo">Título do produto</label>
+          <input
+            id="titulo"
+            type="text"
+            class="campo-input input-titulo-artigo"
+            [class.campo-erro]="isFieldInvalid('titulo')"
+            placeholder="Ex: NVIDIA GeForce RTX 5090..."
+            formControlName="titulo"
+          />
+          @if (isFieldInvalid('titulo')) {
+            <span class="msg-erro">Título é obrigatório (mínimo 3 caracteres)</span>
+          }
+        </div>
+
+        <div class="campos-row">
+          <div class="campo-grupo">
+            <label class="campo-label" for="tipo">Tipo / Categoria</label>
+            <select
+              id="tipo"
+              class="campo-select"
+              [class.campo-erro]="isFieldInvalid('tipo')"
+              formControlName="tipo"
+            >
+              <option value="">Selecione...</option>
+              <option>Placa de Vídeo</option>
+              <option>Processador</option>
+              <option>Memória RAM</option>
+              <option>Armazenamento</option>
+              <option>Placa Mãe</option>
+              <option>Fonte de Alimentação</option>
+              <option>Refrigeração</option>
+              <option>Gabinete</option>
+              <option>Periférico</option>
+            </select>
+            @if (isFieldInvalid('tipo')) {
+              <span class="msg-erro">Selecione uma categoria</span>
+            }
+          </div>
+
+          <div class="campo-grupo">
+            <label class="campo-label" for="fabricante">Fabricante</label>
+            <input
+              id="fabricante"
+              type="text"
+              class="campo-input"
+              [class.campo-erro]="isFieldInvalid('fabricante')"
+              placeholder="Ex: NVIDIA, AMD, Intel..."
+              formControlName="fabricante"
+            />
+            @if (isFieldInvalid('fabricante')) {
+              <span class="msg-erro">Fabricante é obrigatório</span>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD: Especificação -->
+      <div class="editor-card">
+        <h2 class="editor-card-titulo">Especificação técnica</h2>
+        <div class="campo-grupo">
+          <label class="campo-label" for="especificacao">
+            Descrição detalhada (aparece nos cards da vitrine)
+          </label>
+          <textarea
+            id="especificacao"
+            class="editor-textarea"
+            [class.campo-erro]="isFieldInvalid('especificacao_principal')"
+            placeholder="Descreva as especificações técnicas do produto..."
+            formControlName="especificacao_principal"
+          ></textarea>
+          <div class="contador-wrapper">
+            <span class="contador-caracteres" [class.limite]="charCount() >= 5000">
+              {{ charCount() }} / 5000 caracteres
+            </span>
+          </div>
+          @if (isFieldInvalid('especificacao_principal')) {
+            <span class="msg-erro">Especificação é obrigatória</span>
+          }
+        </div>
+      </div>
+
+    </div>
+
+    <!-- COLUNA LATERAL -->
+    <div class="editor-coluna-lateral">
+
+      <!-- CARD: Preço e publicação -->
+      <div class="editor-card">
+        <h2 class="editor-card-titulo">Publicação</h2>
+
+        <div class="campo-grupo">
+          <label class="campo-label" for="preco">Preço (R$)</label>
+          <input
+            id="preco"
+            type="number"
+            class="campo-input"
+            [class.campo-erro]="isFieldInvalid('preco')"
+            placeholder="0.00"
+            formControlName="preco"
+            min="0"
+            step="0.01"
+          />
+          @if (isFieldInvalid('preco')) {
+            <span class="msg-erro">Informe um preço válido</span>
+          }
+        </div>
+
+        <div class="campo-grupo">
+          <label class="campo-label" for="imagem_url">URL da imagem (opcional)</label>
+          <input
+            id="imagem_url"
+            type="text"
+            class="campo-input"
+            placeholder="https://exemplo.com/imagem.jpg"
+            formControlName="imagem_url"
+          />
+        </div>
+
+        <div class="editor-acoes">
+          <button
+            type="button"
+            class="btn-primario"
+            (click)="onSubmit()"
+            [disabled]="isSaving()"
+          >
+            @if (isSaving()) {
+              <i class="fas fa-spinner fa-spin"></i> Salvando...
+            } @else if (modoEdicao()) {
+              <i class="fas fa-save"></i> Salvar alterações
+            } @else {
+              <i class="fas fa-paper-plane"></i> Publicar produto
+            }
+          </button>
+          <a routerLink="/admin" class="btn-secundario">Cancelar</a>
+        </div>
+      </div>
+
+      <!-- CARD: Preview -->
+      <div class="preview-card">
+        <div class="preview-capa-placeholder">
+          @if (artForm.get('imagem_url')?.value) {
+            <img [src]="artForm.get('imagem_url')?.value" alt="Preview da capa" class="preview-imagem" />
+          } @else {
+            <span class="preview-capa-texto">Sem imagem de capa</span>
+          }
+        </div>
+        <div class="preview-corpo">
+          <span class="preview-tag-categoria">{{ previewTipo() }}</span>
+          <h3 class="preview-titulo">{{ previewTitulo() }}</h3>
+          <p class="preview-fabricante">{{ artForm.get('fabricante')?.value || 'Fabricante' }}</p>
+          @if (artForm.get('preco')?.value) {
+            <p class="preview-preco">
+              R$ {{ artForm.get('preco')?.value | number:'1.2-2':'pt-BR' }}
+            </p>
+          }
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

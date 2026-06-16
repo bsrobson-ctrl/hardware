@@ -1,6 +1,5 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { HardwareModel } from '../../core/models/hardwareModel';
-import { Hardware } from '../../core/services/hardware';
+import { Component, inject, computed } from '@angular/core';
+import { ArticleService } from '../../core/services/article';
 import { Artigo } from "../../shared/artigo/artigo";
 
 @Component({
@@ -9,14 +8,7 @@ import { Artigo } from "../../shared/artigo/artigo";
   templateUrl: './vitrine.html',
   styleUrl: './vitrine.css',
 })
-export class Vitrine implements OnInit {
-  private readonly artigoService = inject(Hardware)
-
-  artigos = signal<HardwareModel[]>([]);
-
-  ngOnInit(): void {
-    this.artigoService.getAll().subscribe((res)=> {
-      this.artigos.set(res)
-    })
-  }
+export class Vitrine {
+  private readonly articleService = inject(ArticleService);
+  artigos = computed(() => this.articleService.articles());
 }
