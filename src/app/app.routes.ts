@@ -16,7 +16,8 @@ export const routes: Routes = [
     path: 'admin',
     canActivate: [authGuard],
     children: [
-      { path: '', component: Dashboard },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full'},
+      { path: 'dashboard', component: Dashboard },
       { path: 'novo-artigo', component: NovoArtigo },
       { path: 'editar/:id', component: NovoArtigo },
     ],
