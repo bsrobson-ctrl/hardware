@@ -19,12 +19,12 @@ export class NovoArtigo implements OnInit {
   charCount = signal(0);
 
   artForm = new FormGroup({
-    titulo: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    tipo: new FormControl('', Validators.required),
-    fabricante: new FormControl('', Validators.required),
-    especificacao_principal: new FormControl('', [Validators.required, Validators.maxLength(5000)]),
-    preco: new FormControl<number | null>(null, [Validators.required, Validators.min(0)]),
-    imagem_url: new FormControl(''),
+    titulo: new FormControl(),
+    tipo: new FormControl(),
+    fabricante: new FormControl(),
+    especificacao_principal: new FormControl(),
+    preco: new FormControl(),
+    imagem_url: new FormControl(),
   });
 
   ngOnInit(): void {

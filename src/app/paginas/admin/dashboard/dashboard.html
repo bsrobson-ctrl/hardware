@@ -76,6 +76,10 @@
         </div>
       } @else {
         <div class="tabela-wrapper">
+
+        @if (isLoading()){
+          <div>Está carregando...</div>
+        } @else {
           <table class="tabela">
             <thead>
               <tr>
@@ -87,20 +91,20 @@
               </tr>
             </thead>
             <tbody>
-              
+              @for (item of articles(); track $index) {
                 <tr>
                   <td>
-                    <span class="tabela-titulo-artigo">{{ 'item.titulo' }}</span>
-                    <span class="tabela-sub">{{ 'item.especificacao_principal | slice:0:50' }}...</span>
+                    <span class="tabela-titulo-artigo">{{ item.titulo }}</span>
+                    <span class="tabela-sub">{{ item.especificacao_principal | slice:0:50 }}...</span>
                   </td>
                   <td>
-                    <span class="badge badge-sunset">{{ 'item.tipo' }}</span>
+                    <span class="badge badge-sunset">{{ item.tipo }}</span>
                   </td>
                   <td>
-                    <span class="tabela-fabricante">{{ 'item.fabricante' }}</span>
+                    <span class="tabela-fabricante">{{ item.fabricante }}</span>
                   </td>
                   <td>
-                    <span class="tabela-preco">{{ '' }}</span>
+                    <span class="tabela-preco">{{ item.preco }}</span>
                   </td>
                   <td>
                     <div class="tabela-acoes">
@@ -113,9 +117,11 @@
                     </div>
                   </td>
                 </tr>
-              
+
+              }
             </tbody>
           </table>
+        }
         </div>
       }
     </div>
