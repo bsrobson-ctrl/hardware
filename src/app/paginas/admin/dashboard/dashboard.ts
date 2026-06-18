@@ -1,6 +1,6 @@
-import { Component, inject, computed } from '@angular/core';
+import { Component, inject, computed, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { ArticleService } from '../../../core/services/article';
+import { ArtigosService } from '../../../core/services/article';
 import { AuthService } from '../../../core/services/auth';
 import { CurrencyPipe, SlicePipe } from '@angular/common';
 
@@ -11,19 +11,9 @@ import { CurrencyPipe, SlicePipe } from '@angular/common';
   styleUrl: './dashboard.css',
 })
 export class Dashboard {
-  private readonly articleService = inject(ArticleService);
+  private readonly articleService = inject(ArtigosService);
   readonly authService = inject(AuthService);
 
-  articles = computed(() => this.articleService.articles());
-
-  totalArtigos = computed(() => this.articles().length);
-  totalPublicados = computed(
-    () => this.articles().filter((a) => a.tipo !== '').length
-  );
-
-  remover(id: string): void {
-    if (confirm('Tem certeza que deseja excluir este item?')) {
-      this.articleService.remove(id);
-    }
-  }
+  articles = signal([])
+  
 }

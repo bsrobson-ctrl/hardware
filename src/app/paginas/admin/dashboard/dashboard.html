@@ -39,14 +39,14 @@
       <div class="stat-card">
         <div class="stat-icone stat-icone-rosa"><i class="fas fa-box"></i></div>
         <div class="stat-info">
-          <span class="stat-valor">{{ totalArtigos() }}</span>
+          <span class="stat-valor">{{ '' }}</span>
           <span class="stat-label">Total de produtos</span>
         </div>
       </div>
       <div class="stat-card">
         <div class="stat-icone stat-icone-laranja"><i class="fas fa-check-circle"></i></div>
         <div class="stat-info">
-          <span class="stat-valor">{{ totalPublicados() }}</span>
+          <span class="stat-valor">{{ '' }}</span>
           <span class="stat-label">Publicados</span>
         </div>
       </div>
@@ -87,33 +87,33 @@
               </tr>
             </thead>
             <tbody>
-              @for (item of articles(); track item.id) {
+              
                 <tr>
                   <td>
-                    <span class="tabela-titulo-artigo">{{ item.titulo }}</span>
-                    <span class="tabela-sub">{{ item.especificacao_principal | slice:0:50 }}...</span>
+                    <span class="tabela-titulo-artigo">{{ 'item.titulo' }}</span>
+                    <span class="tabela-sub">{{ 'item.especificacao_principal | slice:0:50' }}...</span>
                   </td>
                   <td>
-                    <span class="badge badge-sunset">{{ item.tipo }}</span>
+                    <span class="badge badge-sunset">{{ 'item.tipo' }}</span>
                   </td>
                   <td>
-                    <span class="tabela-fabricante">{{ item.fabricante }}</span>
+                    <span class="tabela-fabricante">{{ 'item.fabricante' }}</span>
                   </td>
                   <td>
-                    <span class="tabela-preco">{{ item.preco | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
+                    <span class="tabela-preco">{{ '' }}</span>
                   </td>
                   <td>
                     <div class="tabela-acoes">
-                      <a [routerLink]="['/admin/editar', item.id]" class="btn-acao">
+                      <a [routerLink]="['/admin/editar', 'item.id']" class="btn-acao">
                         <i class="fas fa-pen"></i> Editar
                       </a>
-                      <button type="button" class="btn-perigo" (click)="remover(item.id)">
+                      <button type="button" class="btn-perigo" >
                         <i class="fas fa-trash"></i> Excluir
                       </button>
                     </div>
                   </td>
                 </tr>
-              }
+              
             </tbody>
           </table>
         </div>

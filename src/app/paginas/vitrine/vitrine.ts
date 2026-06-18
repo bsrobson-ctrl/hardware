@@ -1,5 +1,4 @@
-import { Component, inject, computed } from '@angular/core';
-import { ArticleService } from '../../core/services/article';
+import { Component, inject, computed, signal } from '@angular/core';
 import { Artigo } from "../../shared/artigo/artigo";
 
 @Component({
@@ -9,6 +8,5 @@ import { Artigo } from "../../shared/artigo/artigo";
   styleUrl: './vitrine.css',
 })
 export class Vitrine {
-  private readonly articleService = inject(ArticleService);
-  artigos = computed(() => this.articleService.articles());
+  artigos = signal([])
 }
