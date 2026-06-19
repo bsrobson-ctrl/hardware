@@ -1,8 +1,6 @@
 <article class="card-hardware animar-subir delay-6">
           <div class="card-imagem">
-            <div class="card-imagem-placeholder"> {{data().imagem_url}}
-              <i class="fas fa-plug"></i>
-            </div>
+            <img [src]="data().imagem_url">
           </div>
           <div class="card-corpo">
             <span class="badge badge-sunset"><i class="fas fa-plug"></i> {{data().tipo}}</span>

@@ -14,7 +14,7 @@
   </header>
 
   <!-- GRID EDITOR -->
-  <form class="editor-pagina" [formGroup]="artForm">
+  <form class="editor-pagina" [formGroup]="artForm" (ngSubmit)="onSubmit()">
 
     <!-- COLUNA PRINCIPAL -->
     <div class="editor-coluna-principal">
@@ -137,8 +137,9 @@
           <label class="campo-label" for="imagem_url">URL da imagem (opcional)</label>
           <input
             id="imagem_url"
-            type="text"
+            type="file"
             class="campo-input"
+            accept=".jpg,.png"
             placeholder="https://exemplo.com/imagem.jpg"
             formControlName="imagem_url"
           />
