@@ -30,5 +30,21 @@ export class Dashboard {
       }
     })
   }
+
+  deleteArtigo (id:any): void{
+    if (!confirm("tem certeza que deseja excluir?")) {
+      return
+    }
+
+    this.articleService.delete(id).subscribe({
+      next: () => {
+        alert("Item deletado com sucesso");
+        this.loadArtigos()
+      },
+      error: (err) => {
+        alert(err.error?.error || "Erro ao excluir item")
+      }
+    })
+  }
   
 }

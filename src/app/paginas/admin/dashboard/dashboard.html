@@ -111,7 +111,7 @@
                       <a [routerLink]="['/admin/editar', 'item.id']" class="btn-acao">
                         <i class="fas fa-pen"></i> Editar
                       </a>
-                      <button type="button" class="btn-perigo" >
+                      <button type="button" class="btn-perigo" (click)="deleteArtigo(item.id)" >
                         <i class="fas fa-trash"></i> Excluir
                       </button>
                     </div>

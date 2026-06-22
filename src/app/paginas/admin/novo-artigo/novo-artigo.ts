@@ -21,6 +21,7 @@ export class NovoArtigo implements OnInit {
   previewTitulo = signal('Seu título aparecerá aqui');
   previewTipo = signal('Tipo');
   charCount = signal(0);
+  imgpreview: string | ArrayBuffer | null = null
 
   artForm = new FormGroup({
     titulo: new FormControl(),
@@ -31,35 +32,44 @@ export class NovoArtigo implements OnInit {
     imagem_url: new FormControl(),
   });
 
-  onFileSelected(event: Event): void{
+  onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
-    this.selectedFile = input.files?.[0] ?? null
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files?.[0] ?? null;
+      console.log(this.selectedFile)
+      const reader = new FileReader()
+      reader.onload = () => {
+        this.imgpreview = reader.result
+      }
+      reader.readAsDataURL(this.selectedFile)
+    }
+
   }
 
   onSubmit(): void {
     const formData = new FormData();
     const values = this.artForm.value;
-    Object.entries(values).forEach(([key, value])=>{
+    Object.entries(values).forEach(([key, value]) => {
       formData.append(key, String(value))
     })
 
-    if(this.selectedFile) {
+    if (this.selectedFile) {
       formData.append("imagem", this.selectedFile)
     }
 
     this.artigoService.create(formData).subscribe({
       next: () => {
-        alert ("Criado com sucesso")
+        alert("Criado com sucesso")
       },
       error: () => {
-        alert ("Foi não")
+        alert("Foi não")
       }
-      
+
     })
   }
 
   ngOnInit(): void {
-    
+
 
     // Live preview
     this.artForm.get('titulo')!.valueChanges.subscribe((val) => {

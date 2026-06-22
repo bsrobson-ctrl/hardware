@@ -142,6 +142,7 @@
             accept=".jpg,.png"
             placeholder="https://exemplo.com/imagem.jpg"
             formControlName="imagem_url"
+            (change)="onFileSelected($event)"
           />
         </div>
 
@@ -167,8 +168,8 @@
       <!-- CARD: Preview -->
       <div class="preview-card">
         <div class="preview-capa-placeholder">
-          @if (artForm.get('imagem_url')?.value) {
-            <img [src]="artForm.get('imagem_url')?.value" alt="Preview da capa" class="preview-imagem" />
+          @if (imgpreview) {
+            <img [src]="imgpreview" alt="Preview da capa" class="preview-imagem" />
           } @else {
             <span class="preview-capa-texto">Sem imagem de capa</span>
           }
