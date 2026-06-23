@@ -94,6 +94,9 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
+  /* align-items: end faz os campos alinharem pela borda inferior,
+     compensando variações de altura causadas pelo label acima de cada campo */
+  align-items: end;
 }
 
 .campo-grupo {
@@ -119,8 +122,9 @@
   width: 100%;
   /* box-sizing garante que padding e border não aumentem a altura total */
   box-sizing: border-box;
-  /* height fixa alinha exatamente com o campo-select */
+  /* height e min-height fixas garantem alinhamento com o campo-select */
   height: 48px;
+  min-height: 48px;
   padding: 0 16px;
   border: 1.5px solid var(--cor-borda);
   border-radius: var(--raio-sm);
@@ -152,9 +156,12 @@
 /* SELECT */
 .campo-select {
   width: 100%;
-  /* box-sizing e height iguais ao campo-input para manter alinhamento perfeito */
+  /* box-sizing, height e min-height garantem que o select não encolha
+     abaixo de 48px independente do comportamento padrão do navegador */
   box-sizing: border-box;
   height: 48px;
+  min-height: 48px;
+  line-height: 48px;
   padding: 0 40px 0 16px;
   border: 1.5px solid var(--cor-borda);
   border-radius: var(--raio-sm);
