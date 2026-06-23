@@ -10,18 +10,29 @@
     </div>
   </header>
 
-  <!-- SIDEBAR -->
+  <!-- SIDEBAR - navegação do painel admin -->
   <aside class="dashboard-sidebar">
     <p class="sidebar-secao-titulo">Menu</p>
 
+    <!-- Link da visão geral: routerLinkActiveOptions exact=true evita que fique ativo em sub-rotas -->
     <a routerLink="/admin" routerLinkActive="ativo" [routerLinkActiveOptions]="{exact: true}" class="sidebar-link">
       <span class="sidebar-icone"><i class="fas fa-chart-line"></i></span> Visão Geral
     </a>
     <a routerLink="/vitrine" class="sidebar-link">
       <span class="sidebar-icone"><i class="fas fa-store"></i></span> Vitrine
     </a>
+    <a routerLink="/videos" class="sidebar-link">
+      <span class="sidebar-icone"><i class="fas fa-play-circle"></i></span> Vídeos
+    </a>
+
+    <!-- Seção de criação de conteúdo -->
+    <p class="sidebar-secao-titulo">Publicar</p>
+
     <a routerLink="/admin/novo-artigo" class="sidebar-link">
       <span class="sidebar-icone"><i class="fas fa-plus"></i></span> Novo Produto
+    </a>
+    <a routerLink="/admin/novo-video" class="sidebar-link">
+      <span class="sidebar-icone"><i class="fab fa-youtube"></i></span> Novo Vídeo
     </a>
 
     <p class="sidebar-secao-titulo">Conta</p>
@@ -132,6 +143,95 @@
         </table>
         }
       </div>
+      }
+    </div>
+
+    <!-- ============================================================
+         TABELA DE VÍDEOS
+         Exibida logo abaixo da tabela de produtos, com o mesmo padrão visual.
+    ============================================================ -->
+    <div class="dashboard-secao">
+      <div class="dashboard-secao-header">
+        <h2 class="dashboard-secao-titulo">Vídeos cadastrados</h2>
+        <a routerLink="/admin/novo-video" class="btn-primario">
+          <i class="fab fa-youtube"></i> Novo vídeo
+        </a>
+      </div>
+
+      @if (isLoadingVideos()) {
+        <!-- Spinner enquanto a lista de vídeos é carregada -->
+        <div class="flex justify-center items-center gap-2 text-slate-600" style="padding: 32px;">
+          <svg class="animate-spin h-5 w-5 text-slate-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+          </svg>
+          <span class="text-sm">Carregando vídeos...</span>
+        </div>
+      }
+      @else {
+        <div class="tabela-wrapper">
+          @if (videos().length === 0) {
+            <!-- Estado vazio: convida o admin a adicionar o primeiro vídeo -->
+            <div class="tabela-vazia">
+              <i class="fab fa-youtube"></i>
+              <p>Nenhum vídeo cadastrado ainda.</p>
+              <a routerLink="/admin/novo-video" class="btn-primario">Adicionar primeiro vídeo</a>
+            </div>
+          }
+          @else {
+            <table class="tabela">
+              <thead>
+                <tr>
+                  <th>Vídeo</th>
+                  <th>Categoria</th>
+                  <th>Link</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (video of videos(); track video.id) {
+                  <tr>
+                    <!-- Título e descrição resumida -->
+                    <td>
+                      <span class="tabela-titulo-artigo">{{ video.titulo }}</span>
+                      <span class="tabela-sub">{{ video.descricao | slice:0:60 }}...</span>
+                    </td>
+
+                    <!-- Badge de categoria -->
+                    <td>
+                      <span class="badge badge-sunset">{{ video.categoria }}</span>
+                    </td>
+
+                    <!-- Link externo para o YouTube -->
+                    <td>
+                      <a
+                        [href]="video.youtube_url"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn-acao"
+                        style="text-decoration:none;"
+                      >
+                        <i class="fab fa-youtube"></i> Assistir
+                      </a>
+                    </td>
+
+                    <!-- Ações: editar e excluir -->
+                    <td>
+                      <div class="tabela-acoes">
+                        <a [routerLink]="['/admin/edit-video', video.id]" class="btn-acao">
+                          <i class="fas fa-pen"></i> Editar
+                        </a>
+                        <button type="button" class="btn-perigo" (click)="deleteVideo(video.id)">
+                          <i class="fas fa-trash"></i> Excluir
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          }
+        </div>
       }
     </div>
 

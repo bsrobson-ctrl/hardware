@@ -117,7 +117,11 @@
 
 .campo-input {
   width: 100%;
-  padding: 12px 16px;
+  /* box-sizing garante que padding e border não aumentem a altura total */
+  box-sizing: border-box;
+  /* height fixa alinha exatamente com o campo-select */
+  height: 48px;
+  padding: 0 16px;
   border: 1.5px solid var(--cor-borda);
   border-radius: var(--raio-sm);
   font-size: 15px;
@@ -140,13 +144,18 @@
 .input-titulo-artigo {
   font-family: var(--fonte-titulo);
   font-size: 22px;
-  padding: 14px 16px;
+  /* O título é maior que os outros campos, então sobrescreve a altura */
+  height: 58px;
+  padding: 0 16px;
 }
 
 /* SELECT */
 .campo-select {
   width: 100%;
-  padding: 12px 16px;
+  /* box-sizing e height iguais ao campo-input para manter alinhamento perfeito */
+  box-sizing: border-box;
+  height: 48px;
+  padding: 0 40px 0 16px;
   border: 1.5px solid var(--cor-borda);
   border-radius: var(--raio-sm);
   font-size: 15px;
@@ -156,6 +165,7 @@
   transition: all var(--transicao);
   font-family: var(--fonte-corpo);
   appearance: none;
+  /* Ícone de seta personalizado no lugar do padrão do navegador */
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath fill='%23888' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 16px center;
@@ -371,6 +381,52 @@
   font-weight: 700;
   color: var(--cor-preco);
   margin-top: 4px;
+}
+
+/* ================================================================
+   ESTILOS EXTRAS PARA O PREVIEW DE VÍDEO (usado por novo-video)
+   O novo-video.ts herda este arquivo CSS para manter consistência visual.
+================================================================ */
+
+/* Overlay de play centralizado na thumbnail do preview */
+.video-play-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.video-play-overlay i {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: rgba(236, 72, 153, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #fff;
+  box-shadow: 0 0 16px rgba(236, 72, 153, 0.5);
+}
+
+/* Placeholder exibido no preview quando a URL do YouTube ainda não foi preenchida */
+.preview-thumb-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--cor-cinza);
+}
+
+.preview-thumb-placeholder i {
+  font-size: 32px;
+  color: rgba(236, 72, 153, 0.4);
+}
+
+.preview-thumb-placeholder span {
+  font-size: 13px;
 }
 
 /* RESPONSIVIDADE */

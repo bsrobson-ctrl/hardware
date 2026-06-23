@@ -1,0 +1,87 @@
+/* ================================================================
+   VIDEOS PAGE
+   Reutiliza as classes globais da vitrine (.hardware-banner,
+   .hardware-controles, .grid-hardware, .card-hardware, etc.).
+   Este arquivo adiciona apenas o que é exclusivo da página de vídeos.
+================================================================ */
+
+/* ----------------------------------------------------------------
+   THUMBNAIL DO YOUTUBE
+   Substitui a área de imagem do card para exibir a thumbnail
+   do YouTube com um ícone de play sobreposto.
+---------------------------------------------------------------- */
+.video-thumb-container {
+  /* Garante que a thumbnail e o overlay fiquem empilhados */
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+  background-color: #0b0b0d;
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.video-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Leve escurecimento para o overlay de play se destacar */
+  filter: brightness(0.85);
+  transition: filter var(--transicao), transform var(--transicao);
+}
+
+.card-hardware:hover .video-thumb {
+  filter: brightness(0.65);
+  transform: scale(1.04);
+}
+
+/* Círculo semitransparente com ícone de play centralizado */
+.video-play-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none; /* Não bloqueia o clique no card */
+}
+
+.video-play-overlay i {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background-color: rgba(236, 72, 153, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: #fff;
+  /* A sombra reflete o glow do tema */
+  box-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
+  transition: transform var(--transicao), background-color var(--transicao);
+}
+
+.card-hardware:hover .video-play-overlay i {
+  transform: scale(1.15);
+  background-color: var(--cor-preco); /* Muda para laranja no hover */
+}
+
+/* ----------------------------------------------------------------
+   ESTADO VAZIO / CARREGAMENTO
+   Exibido quando não há vídeos ou a API ainda está respondendo.
+---------------------------------------------------------------- */
+.estado-vazio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  gap: 16px;
+  color: var(--cor-texto-suave);
+}
+
+.estado-vazio i {
+  font-size: 48px;
+  color: var(--cor-cinza);
+}
+
+.estado-vazio p {
+  font-size: 15px;
+}

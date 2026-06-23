@@ -1,0 +1,181 @@
+<div class="editor-wrapper">
+
+  <!-- HEADER DO EDITOR - mesmo padrão do novo-artigo -->
+  <header class="editor-header">
+    <a routerLink="/" class="logo">Tech<span>Hardware</span></a>
+    <nav class="editor-nav">
+      <a routerLink="/admin" class="editor-nav-voltar">
+        <i class="fas fa-arrow-left"></i> Voltar ao painel
+      </a>
+      <button type="button" class="btn-sair" (click)="onSubmit()">
+        @if (isSaving()) { Salvando... }
+        @else if (modoEdicao()) { Salvar alterações }
+        @else { Publicar vídeo }
+      </button>
+    </nav>
+  </header>
+
+  <!-- FORMULÁRIO EM GRID: coluna principal + coluna lateral -->
+  <form class="editor-pagina" [formGroup]="videoForm" (ngSubmit)="onSubmit()">
+
+    <!-- =====================================================
+         COLUNA PRINCIPAL - campos do vídeo
+    ===================================================== -->
+    <div class="editor-coluna-principal">
+
+      <!-- CARD: Informações principais -->
+      <div class="editor-card">
+        <h2 class="editor-card-titulo">
+          {{ id ? 'Editar vídeo' : 'Novo vídeo' }}
+        </h2>
+
+        <!-- Título do vídeo -->
+        <div class="campo-grupo">
+          <label class="campo-label" for="titulo">Título do vídeo</label>
+          <input
+            id="titulo"
+            type="text"
+            class="campo-input input-titulo-artigo"
+            [class.campo-erro]="isFieldInvalid('titulo')"
+            placeholder="Ex: RTX 5090 - Benchmark completo..."
+            formControlName="titulo"
+          />
+          @if (isFieldInvalid('titulo')) {
+            <span class="msg-erro">Título é obrigatório (mínimo 3 caracteres)</span>
+          }
+        </div>
+
+        <!-- Linha com Categoria e URL do YouTube lado a lado -->
+        <div class="campos-row">
+
+          <!-- Categoria (select) - alinhada com o campo ao lado -->
+          <div class="campo-grupo">
+            <label class="campo-label" for="categoria">Categoria</label>
+            <select
+              id="categoria"
+              class="campo-select"
+              [class.campo-erro]="isFieldInvalid('categoria')"
+              formControlName="categoria"
+            >
+              <option value="">Selecione...</option>
+              <option>Benchmark</option>
+              <option>Tutorial</option>
+              <option>Review</option>
+              <option>Notícia</option>
+              <option>Setup</option>
+              <option>Dicas</option>
+            </select>
+            @if (isFieldInvalid('categoria')) {
+              <span class="msg-erro">Selecione uma categoria</span>
+            }
+          </div>
+
+          <!-- URL do YouTube -->
+          <div class="campo-grupo">
+            <label class="campo-label" for="youtube_url">Link do YouTube</label>
+            <input
+              id="youtube_url"
+              type="url"
+              class="campo-input"
+              [class.campo-erro]="isFieldInvalid('youtube_url')"
+              placeholder="https://www.youtube.com/watch?v=..."
+              formControlName="youtube_url"
+            />
+            @if (isFieldInvalid('youtube_url')) {
+              <span class="msg-erro">Informe uma URL válida do YouTube</span>
+            }
+          </div>
+
+        </div>
+      </div>
+
+      <!-- CARD: Descrição do vídeo -->
+      <div class="editor-card">
+        <h2 class="editor-card-titulo">Descrição</h2>
+        <div class="campo-grupo">
+          <label class="campo-label" for="descricao">
+            Breve descrição (aparece nos cards da página de vídeos)
+          </label>
+          <textarea
+            id="descricao"
+            class="editor-textarea"
+            [class.campo-erro]="isFieldInvalid('descricao')"
+            placeholder="Descreva o conteúdo do vídeo..."
+            formControlName="descricao"
+          ></textarea>
+          <div class="contador-wrapper">
+            <span class="contador-caracteres" [class.limite]="charCount() >= 500">
+              {{ charCount() }} / 500 caracteres
+            </span>
+          </div>
+          @if (isFieldInvalid('descricao')) {
+            <span class="msg-erro">Descrição é obrigatória</span>
+          }
+        </div>
+      </div>
+
+    </div>
+
+    <!-- =====================================================
+         COLUNA LATERAL - ações e preview do vídeo
+    ===================================================== -->
+    <div class="editor-coluna-lateral">
+
+      <!-- CARD: Publicação -->
+      <div class="editor-card">
+        <h2 class="editor-card-titulo">Publicação</h2>
+
+        <div class="editor-acoes">
+          <button
+            type="button"
+            class="btn-primario"
+            (click)="onSubmit()"
+            [disabled]="isSaving()"
+          >
+            @if (isSaving()) {
+              <i class="fas fa-spinner fa-spin"></i> Salvando...
+            } @else if (modoEdicao()) {
+              <i class="fas fa-save"></i> Salvar alterações
+            } @else {
+              <i class="fas fa-paper-plane"></i> Publicar vídeo
+            }
+          </button>
+          <a routerLink="/admin" class="btn-secundario">Cancelar</a>
+        </div>
+      </div>
+
+      <!-- CARD: Preview da thumbnail do YouTube -->
+      <div class="preview-card">
+        <!-- Exibe a thumbnail real do YouTube se a URL for válida -->
+        <div class="preview-capa-placeholder">
+          @if (thumbnailPreview()) {
+            <div class="video-thumb-container" style="width:100%; height:100%; position:relative;">
+              <img
+                [src]="thumbnailPreview()"
+                alt="Preview da thumbnail"
+                class="preview-imagem"
+              />
+              <!-- Overlay de play no preview -->
+              <div class="video-play-overlay">
+                <i class="fas fa-play"></i>
+              </div>
+            </div>
+          } @else {
+            <!-- Placeholder enquanto a URL não é preenchida -->
+            <div class="preview-thumb-placeholder">
+              <i class="fab fa-youtube"></i>
+              <span>Preview da thumbnail</span>
+            </div>
+          }
+        </div>
+
+        <!-- Informações do vídeo abaixo da thumbnail -->
+        <div class="preview-corpo">
+          <span class="preview-tag-categoria">{{ previewCategoria() }}</span>
+          <h3 class="preview-titulo">{{ previewTitulo() }}</h3>
+        </div>
+      </div>
+
+    </div>
+  </form>
+</div>

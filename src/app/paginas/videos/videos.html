@@ -1,0 +1,119 @@
+<main class="container">
+
+  <!-- BANNER HERO - igual ao da vitrine, mas com tema de vídeos -->
+  <section class="hardware-banner">
+    <span class="hardware-banner-tag">
+      <i class="fas fa-play-circle"></i> Conteúdo em Vídeo
+    </span>
+    <h1 class="hardware-banner-titulo">Aprenda com os<br>melhores tutoriais</h1>
+    <p class="hardware-banner-sub">
+      Vídeos selecionados sobre hardware, benchmarks e análises aprofundadas para você tomar as melhores decisões.
+    </p>
+    <!-- Texto decorativo de fundo, substituindo o "RTX" da vitrine -->
+    <div class="banner-numero-fundo">YT</div>
+  </section>
+
+  <!-- BARRA DE BUSCA E FILTROS POR CATEGORIA -->
+  <div class="hardware-controles">
+    <div class="busca-container">
+      <span class="busca-icone"><i class="fas fa-search"></i></span>
+      <!-- Campo de busca: ao digitar, chama o método filtrarVideos() -->
+      <input
+        class="busca-input"
+        type="text"
+        placeholder="Buscar vídeo..."
+        [value]="termoBusca()"
+        (input)="onBusca($event)"
+      />
+    </div>
+
+    <div class="filtros-lista">
+      <!-- Botão "Todos" limpa o filtro de categoria ativo -->
+      <button
+        class="filtro-btn"
+        [class.ativo]="categoriaAtiva() === ''"
+        (click)="definirCategoria('')"
+      >Todos</button>
+
+      <!-- Botões gerados dinamicamente a partir das categorias disponíveis -->
+      @for (cat of categorias; track cat) {
+        <button
+          class="filtro-btn"
+          [class.ativo]="categoriaAtiva() === cat"
+          (click)="definirCategoria(cat)"
+        >{{ cat }}</button>
+      }
+    </div>
+  </div>
+
+  <!-- GRADE DE VÍDEOS -->
+  <section class="hardware-grid-container">
+    <p class="hardware-grid-titulo">Vídeos disponíveis:</p>
+
+    <!-- Estado de carregamento -->
+    @if (isLoading()) {
+      <div class="estado-vazio">
+        <i class="fas fa-spinner fa-spin"></i>
+        <p>Carregando vídeos...</p>
+      </div>
+    }
+
+    <!-- Nenhum resultado encontrado -->
+    @else if (videosFiltrados().length === 0) {
+      <div class="estado-vazio">
+        <i class="fas fa-video-slash"></i>
+        <p>Nenhum vídeo encontrado.</p>
+      </div>
+    }
+
+    <!-- Grid de cards de vídeo -->
+    @else {
+      <div class="grid-hardware">
+        @for (video of videosFiltrados(); track video.id) {
+          <article class="card-hardware animar-subir">
+
+            <!-- Thumbnail do YouTube gerada automaticamente a partir do ID do vídeo -->
+            <div class="card-imagem video-thumb-container">
+              <img
+                [src]="getThumbnail(video.youtube_url)"
+                [alt]="'Thumbnail: ' + video.titulo"
+                class="video-thumb"
+              />
+              <!-- Ícone de play sobreposto na thumbnail -->
+              <div class="video-play-overlay">
+                <i class="fas fa-play"></i>
+              </div>
+            </div>
+
+            <!-- Corpo do card -->
+            <div class="card-corpo">
+              <!-- Badge com a categoria do vídeo -->
+              <span class="badge badge-sunset">
+                <i class="fas fa-tag"></i> {{ video.categoria }}
+              </span>
+
+              <div class="info-principal">
+                <h2 class="modelo">{{ video.titulo }}</h2>
+                <p class="especificacao">{{ video.descricao }}</p>
+              </div>
+
+              <!-- Botão que abre o vídeo no YouTube em nova aba -->
+              <div class="rodape-card">
+                <a
+                  [href]="video.youtube_url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn-comprar"
+                >
+                  <i class="fab fa-youtube"></i> Assistir no YouTube
+                </a>
+              </div>
+            </div>
+
+          </article>
+        }
+      </div>
+    }
+  </section>
+
+</main>
