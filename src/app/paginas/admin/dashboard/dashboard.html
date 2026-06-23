@@ -67,62 +67,71 @@
           <i class="fas fa-plus"></i> Novo produto
         </a>
       </div>
+      @if (isLoading()){
+      <div class="flex justify-center items-center gap-2 text-slate-600">
+        <svg class="animate-spin h-5 w-5 text-slate-500" xmlns="'http://www.w3.org/2000/svg" fill="none"
+          viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+        </svg>
+        <span class="text-sm">Está carregando...</span>
+      </div>
+      }
+      @else {
+      <div class="tabela-wrapper">
 
-      @if (articles().length === 0) {
+
+        @if (articles().length === 0) {
         <div class="tabela-vazia">
           <i class="fas fa-box-open"></i>
           <p>Nenhum produto cadastrado ainda.</p>
           <a routerLink="/admin/novo-artigo" class="btn-primario">Criar primeiro produto</a>
         </div>
-      } @else {
-        <div class="tabela-wrapper">
-
-        @if (isLoading()){
-          <div>Está carregando...</div>
-        } @else {
-          <table class="tabela">
-            <thead>
-              <tr>
-                <th>Produto</th>
-                <th>Tipo</th>
-                <th>Fabricante</th>
-                <th>Preço</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              @for (item of articles(); track $index) {
-                <tr>
-                  <td>
-                    <span class="tabela-titulo-artigo">{{ item.titulo }}</span>
-                    <span class="tabela-sub">{{ item.especificacao_principal | slice:0:50 }}...</span>
-                  </td>
-                  <td>
-                    <span class="badge badge-sunset">{{ item.tipo }}</span>
-                  </td>
-                  <td>
-                    <span class="tabela-fabricante">{{ item.fabricante }}</span>
-                  </td>
-                  <td>
-                    <span class="tabela-preco">{{ item.preco }}</span>
-                  </td>
-                  <td>
-                    <div class="tabela-acoes">
-                      <a [routerLink]="['/admin/editar', 'item.id']" class="btn-acao">
-                        <i class="fas fa-pen"></i> Editar
-                      </a>
-                      <button type="button" class="btn-perigo" (click)="deleteArtigo(item.id)" >
-                        <i class="fas fa-trash"></i> Excluir
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-
-              }
-            </tbody>
-          </table>
         }
-        </div>
+        @else {
+        <table class="tabela">
+          <thead>
+            <tr>
+              <th>Produto</th>
+              <th>Tipo</th>
+              <th>Fabricante</th>
+              <th>Preço</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of articles(); track $index) {
+            <tr>
+              <td>
+                <span class="tabela-titulo-artigo">{{ item.titulo }}</span>
+                <span class="tabela-sub">{{ item.especificacao_principal | slice:0:50 }}...</span>
+              </td>
+              <td>
+                <span class="badge badge-sunset">{{ item.tipo }}</span>
+              </td>
+              <td>
+                <span class="tabela-fabricante">{{ item.fabricante }}</span>
+              </td>
+              <td>
+                <span class="tabela-preco">{{ item.preco }}</span>
+              </td>
+              <td>
+                <div class="tabela-acoes">
+                  <a [routerLink]="['/admin/edit', item.id]" class="btn-acao">
+                    <i class="fas fa-pen"></i> Editar
+                  </a>
+                  <button type="button" class="btn-perigo" (click)="deleteArtigo(item.id)">
+                    <i class="fas fa-trash"></i> Excluir
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            }
+          </tbody>
+        </table>
+        }
+      </div>
       }
     </div>
 

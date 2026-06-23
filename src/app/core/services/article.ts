@@ -13,6 +13,9 @@ export class ArtigosService {
   getAll(): Observable<any>{
     return this.http.get(this.apiUrl + "/hardware")
   }
+  getById(id: any): Observable<any>{
+    return this.http.get(this.apiUrl + "/hardware/" + id);
+  }
   create(formData: FormData): Observable<any> {
     return this.http.post(this.apiUrl + "/hardware", formData)
   }

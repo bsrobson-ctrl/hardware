@@ -19,7 +19,7 @@ export const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full'},
       { path: 'dashboard', component: Dashboard },
       { path: 'novo-artigo', component: NovoArtigo },
-      { path: 'editar/:id', component: NovoArtigo },
+      { path: 'edit/:id', component: NovoArtigo },
     ],
   },
 ];

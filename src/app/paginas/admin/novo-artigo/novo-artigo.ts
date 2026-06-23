@@ -3,6 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { DecimalPipe } from '@angular/common';
 import { ArtigosService } from '../../../core/services/article';
+import { HardwareModel } from '../../../core/models/hardwareModel';
 
 @Component({
   selector: 'app-novo-artigo',
@@ -13,7 +14,14 @@ import { ArtigosService } from '../../../core/services/article';
 export class NovoArtigo implements OnInit {
 
   private artigoService = inject(ArtigosService)
-  selectedFile: File | null = null
+  private route = inject(ActivatedRoute);
+  private router = inject (Router)
+  selectedFile: File | null = null;
+  id: any;
+  isEditMode = signal(false);
+  itemEdit: HardwareModel[] = []
+
+
 
   modoEdicao = signal(false);
   idEdicao = signal<string | null>(null);
@@ -31,6 +39,44 @@ export class NovoArtigo implements OnInit {
     preco: new FormControl(),
     imagem_url: new FormControl(),
   });
+
+  ngOnInit(): void {
+
+    this.id = this.route.snapshot.paramMap.get('id');
+    console.log(this.id)
+
+    if (this.id) {
+      this.artigoService.getById(this.id).subscribe({
+        next: (res) => {
+          console.log(res);
+
+          this.artForm.patchValue({
+            titulo: res.titulo,
+            tipo: res.tipo,
+            fabricante: res.tipo,
+            especificacao_principal: res.especificacao_principal,
+            preco: res.preco,
+            imagem_url: res.imagem_url,
+          });
+        },
+      });
+    }
+
+    // Live preview
+    this.artForm.get('titulo')!.valueChanges.subscribe((val) => {
+      this.previewTitulo.set(val || 'Seu título aparecerá aqui');
+    });
+
+    this.artForm.get('tipo')!.valueChanges.subscribe((val) => {
+      this.previewTipo.set(val || 'Tipo');
+    });
+
+    this.artForm.get('especificacao_principal')!.valueChanges.subscribe((val) => {
+      this.charCount.set(val?.length ?? 0);
+    });
+  }
+
+
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -57,32 +103,28 @@ export class NovoArtigo implements OnInit {
       formData.append("imagem", this.selectedFile)
     }
 
-    this.artigoService.create(formData).subscribe({
-      next: () => {
-        alert("Criado com sucesso")
-      },
-      error: () => {
-        alert("Foi não")
-      }
+    if (this.id) {
+      this.artigoService.update(formData, this.id).subscribe({
+        next: () => {
+          alert("Atualizado com sucesso");
+          this.router.navigate(['/admin/dashboard']);
+        },
+        error: () => {
+          alert("Foi não")
+        }
 
-    })
-  }
+      });
+    } else {
+      this.artigoService.create(formData).subscribe({
+        next: () => {
+          alert("Criado com sucesso")
+        },
+        error: () => {
+          alert("Foi não")
+        },
 
-  ngOnInit(): void {
-
-
-    // Live preview
-    this.artForm.get('titulo')!.valueChanges.subscribe((val) => {
-      this.previewTitulo.set(val || 'Seu título aparecerá aqui');
-    });
-
-    this.artForm.get('tipo')!.valueChanges.subscribe((val) => {
-      this.previewTipo.set(val || 'Tipo');
-    });
-
-    this.artForm.get('especificacao_principal')!.valueChanges.subscribe((val) => {
-      this.charCount.set(val?.length ?? 0);
-    });
+      })
+    }
   }
 
   isFieldInvalid(field: string): boolean {
