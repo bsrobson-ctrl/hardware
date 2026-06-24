@@ -223,13 +223,18 @@ button.btn-painel {
   right: 60px;
   top: 50%;
   transform: translateY(-50%);
-  font-family: var(--fonte-titulo);
-  font-size: 180px;
-  font-weight: 700;
-  color: white;
-  line-height: 1;
   pointer-events: none;
   user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.banner-svg-deco {
+  width: 280px;
+  height: 175px;
+  opacity: 0.18;
+  filter: drop-shadow(0 0 18px rgba(236, 72, 153, 0.3));
 }
 
 /* BARRA DE BUSCA E FILTROS RÁPIDOS */
