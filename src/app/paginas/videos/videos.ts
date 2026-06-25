@@ -1,10 +1,11 @@
 import { Component, inject, signal, computed, OnInit } from '@angular/core';
 import { VideosService } from '../../core/services/video';
 import { VideoModel } from '../../core/models/videoModel';
+import { SvgYt } from "../../shared/svg-yt/svg-yt";
 
 @Component({
   selector: 'app-videos',
-  imports: [],
+  imports: [SvgYt],
   templateUrl: './videos.html',
   styleUrl: './videos.css',
 })

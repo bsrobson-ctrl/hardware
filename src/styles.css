@@ -228,6 +228,9 @@ button.btn-painel {
   display: flex;
   align-items: center;
   justify-content: center;
+  /* Adicione as duas linhas abaixo para segurar o tamanho */
+  width: 350px; 
+  height: 250px;
 }
 
 .banner-svg-deco {

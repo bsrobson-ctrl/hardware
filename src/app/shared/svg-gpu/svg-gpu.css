@@ -1,0 +1,20 @@
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* TRUQUE 1: A "Aura" de Luz. 
+     Isso cria um fundo arredondado e suave atrás do chip, simulando a luz que reflete na placa-mãe. */
+  background: radial-gradient(circle at center, rgba(236, 72, 153, 0.15) 0%, transparent 65%);
+}
+
+.banner-svg-deco {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  
+  /* TRUQUE 2: Empilhamento de Sombras.
+     Um neon real tem um brilho forte no centro (4px), um médio espalhado (12px) e uma luz difusa distante (24px). */
+  filter: drop-shadow(0px 0px 4px rgba(236, 72, 153, 0.9))
+          drop-shadow(0px 0px 12px rgba(139, 92, 246, 0.7))
+          drop-shadow(0px 0px 24px rgba(236, 72, 153, 0.5));
+}
