@@ -11,7 +11,7 @@ export class VideosService {
   private readonly http = inject(HttpClient);
 
   // URL base da API. Os vídeos ficam no endpoint /videos.
-  private readonly apiUrl = 'https://api-senai-angular.vercel.app/api';
+  private readonly apiUrl = 'https://api-senai-angular.vercel.app/api/hardware';
 
   // Retorna todos os vídeos cadastrados
   getAll(): Observable<any> {

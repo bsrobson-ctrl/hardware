@@ -29,7 +29,7 @@ export class NovoVideo implements OnInit {
 
   // Signals para o preview ao vivo (coluna lateral)
   previewTitulo = signal('Título do vídeo aparecerá aqui');
-  previewCategoria = signal('Categoria');
+  // previewCategoria = signal('Categoria');
 
   // Contador de caracteres para a descrição (limite: 500)
   charCount = signal(0);
@@ -37,15 +37,14 @@ export class NovoVideo implements OnInit {
   // Definição do formulário reativo com validações básicas
   videoForm = new FormGroup({
     titulo:      new FormControl('', [Validators.required, Validators.minLength(3)]),
-    categoria:   new FormControl('', [Validators.required]),
-    youtube_url: new FormControl('', [Validators.required]),
+    url: new FormControl('', [Validators.required]),
     descricao:   new FormControl('', [Validators.required]),
   });
 
   // computed() gera a URL da thumbnail automaticamente.
   // Recalcula sempre que o campo youtube_url do formulário muda.
   thumbnailPreview = computed(() => {
-    const url = this.videoForm.get('youtube_url')?.value || '';
+    const url = this.videoForm.get('url')?.value || '';
     return this.extrairThumbnail(url);
   });
 
@@ -61,8 +60,8 @@ export class NovoVideo implements OnInit {
           // Preenche o formulário com os dados vindos da API
           this.videoForm.patchValue({
             titulo:      res.titulo,
-            categoria:   res.categoria,
-            youtube_url: res.youtube_url,
+            // categoria:   res.categoria,
+            url: res.url,
             descricao:   res.descricao,
           });
         },
@@ -74,10 +73,10 @@ export class NovoVideo implements OnInit {
       this.previewTitulo.set(val || 'Título do vídeo aparecerá aqui');
     });
 
-    // Observa mudanças na categoria para atualizar o badge do preview
-    this.videoForm.get('categoria')!.valueChanges.subscribe(val => {
-      this.previewCategoria.set(val || 'Categoria');
-    });
+    // // Observa mudanças na categoria para atualizar o badge do preview
+    // this.videoForm.get('categoria')!.valueChanges.subscribe(val => {
+    //   this.previewCategoria.set(val || 'Categoria');
+    // });
 
     // Observa mudanças na descrição para o contador de caracteres
     this.videoForm.get('descricao')!.valueChanges.subscribe(val => {
@@ -113,8 +112,8 @@ export class NovoVideo implements OnInit {
     // Monta o objeto que será enviado como JSON para a API
     const body = {
       titulo:      this.videoForm.value.titulo,
-      categoria:   this.videoForm.value.categoria,
-      youtube_url: this.videoForm.value.youtube_url,
+      // categoria:   this.videoForm.value.categoria,
+      url: this.videoForm.value.url,
       descricao:   this.videoForm.value.descricao,
     };
 
@@ -131,6 +130,8 @@ export class NovoVideo implements OnInit {
         },
       });
     } else {
+      console.log(body);
+      
       // Modo criação: chama o método create do service
       this.videosService.create(body).subscribe({
         next: () => {

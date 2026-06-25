@@ -48,7 +48,7 @@
         <!-- Linha com Categoria e URL do YouTube lado a lado -->
         <div class="campos-row">
 
-          <!-- Categoria (select) - alinhada com o campo ao lado -->
+          <!-- Categoria (select) - alinhada com o campo ao lado
           <div class="campo-grupo">
             <label class="campo-label" for="categoria">Categoria</label>
             <select
@@ -68,20 +68,20 @@
             @if (isFieldInvalid('categoria')) {
               <span class="msg-erro">Selecione uma categoria</span>
             }
-          </div>
+          </div> -->
 
           <!-- URL do YouTube -->
           <div class="campo-grupo">
-            <label class="campo-label" for="youtube_url">Link do YouTube</label>
+            <label class="campo-label" for="url">Link do YouTube</label>
             <input
-              id="youtube_url"
+              id="url"
               type="url"
               class="campo-input"
-              [class.campo-erro]="isFieldInvalid('youtube_url')"
+              [class.campo-erro]="isFieldInvalid('url')"
               placeholder="https://www.youtube.com/watch?v=..."
-              formControlName="youtube_url"
+              formControlName="url"
             />
-            @if (isFieldInvalid('youtube_url')) {
+            @if (isFieldInvalid('url')) {
               <span class="msg-erro">Informe uma URL válida do YouTube</span>
             }
           </div>
@@ -171,7 +171,7 @@
 
         <!-- Informações do vídeo abaixo da thumbnail -->
         <div class="preview-corpo">
-          <span class="preview-tag-categoria">{{ previewCategoria() }}</span>
+          <!-- <span class="preview-tag-categoria">{{ previewCategoria() }}</span> -->
           <h3 class="preview-titulo">{{ previewTitulo() }}</h3>
         </div>
       </div>

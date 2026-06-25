@@ -5,7 +5,7 @@ export interface VideoModel {
   titulo: string;
   descricao: string;
   // URL completa do YouTube, ex: https://www.youtube.com/watch?v=abc123
-  youtube_url: string;
+  url: string;
   // Categoria para filtragem na página pública
-  categoria: string;
+  // categoria: string;
 }

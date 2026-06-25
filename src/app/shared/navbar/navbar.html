@@ -2,10 +2,10 @@
     <a routerLink="/" class="logo">Tech<span>Hardware</span></a>
     <nav class="navbar">
       <ul class="nav-lista">
-        <li><a routerLink="/vitrine" class="nav-link">Produtos</a></li>
+        <li><a routerLink="/vitrine" routerLinkActive="ativo" class="nav-link">Produtos</a></li>
         <!-- routerLink correto para a página de vídeos, em vez do href estático anterior -->
-        <li><a routerLink="/videos" class="nav-link">Vídeos</a></li>
-        <li><a routerLink="/" class="nav-link">Sobre</a></li>
+        <li><a routerLink="/videos" routerLinkActive="ativo" class="nav-link">Vídeos</a></li>
+        <li><a routerLink="/"  class="nav-link">Sobre</a></li>
       </ul>
       @if (authService.isLoggedIn()) {
         <a routerLink="/admin" class="btn-painel">Painel Admin</a>

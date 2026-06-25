@@ -183,7 +183,6 @@
               <thead>
                 <tr>
                   <th>Vídeo</th>
-                  <th>Categoria</th>
                   <th>Link</th>
                   <th>Ações</th>
                 </tr>
@@ -198,14 +197,12 @@
                     </td>
 
                     <!-- Badge de categoria -->
-                    <td>
-                      <span class="badge badge-sunset">{{ video.categoria }}</span>
-                    </td>
+
 
                     <!-- Link externo para o YouTube -->
                     <td>
                       <a
-                        [href]="video.youtube_url"
+                        [href]="video.url"
                         target="_blank"
                         rel="noopener noreferrer"
                         class="btn-acao"

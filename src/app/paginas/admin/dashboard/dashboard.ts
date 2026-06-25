@@ -64,6 +64,8 @@ export class Dashboard implements OnInit {
   private loadVideos(): void {
     this.videosService.getAll().subscribe({
       next: (data) => {
+        console.log(data);
+        
         this.videos.set(data);
         this.isLoadingVideos.set(false);
       },

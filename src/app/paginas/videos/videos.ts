@@ -26,27 +26,34 @@ export class Videos implements OnInit {
   categoriaAtiva = signal('');
 
   // Lista estática de categorias disponíveis para os botões de filtro
-  categorias = ['Benchmark', 'Tutorial', 'Review', 'Notícia', 'Setup', 'Dicas'];
+  // categorias = ['Benchmark', 'Tutorial', 'Review', 'Notícia', 'Setup', 'Dicas'];
 
   // computed() recalcula automaticamente sempre que termoBusca ou categoriaAtiva mudam.
   // Combina os dois filtros: busca por texto + filtro por categoria.
-  videosFiltrados = computed(() => {
+  videosFiltrados = this.todos
+
+  /**
+   *computed(() => {
     const termo = this.termoBusca().toLowerCase().trim();
     const cat = this.categoriaAtiva();
 
     return this.todos().filter(v => {
       // Verifica se o título contém o termo digitado (case-insensitive)
       const bateuBusca = !termo || v.titulo.toLowerCase().includes(termo);
-      // Verifica se a categoria bate com o filtro ativo ('' = todos)
-      const bateuCategoria = !cat || v.categoria === cat;
-      return bateuBusca && bateuCategoria;
+      // // Verifica se a categoria bate com o filtro ativo ('' = todos)
+      // const bateuCategoria = !cat || v.categoria === cat;
+      // return bateuBusca && bateuCategoria;
     });
-  });
+  }); 
+   
+   */
 
+  
   ngOnInit(): void {
     // Carrega os vídeos da API quando o componente é inicializado
     this.videosService.getAll().subscribe({
       next: (res) => {
+        console.log(res)
         this.todos.set(res);
         this.isLoading.set(false);
       },
