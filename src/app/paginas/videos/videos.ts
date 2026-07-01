@@ -11,91 +11,101 @@ import { SvgYt } from "../../shared/svg-yt/svg-yt";
 })
 export class Videos implements OnInit {
 
-  // Injeta o serviço de vídeos para buscar dados da API
   private readonly videosService = inject(VideosService);
 
-  // Signal que armazena todos os vídeos retornados pela API
   todos = signal<VideoModel[]>([]);
-
-  // Signal para controlar o estado de carregamento (exibe spinner)
   isLoading = signal(true);
-
-  // Signal para o termo de busca digitado pelo usuário
   termoBusca = signal('');
-
-  // Signal para a categoria de filtro ativa ('': exibe todos)
   categoriaAtiva = signal('');
 
-  // Lista estática de categorias disponíveis para os botões de filtro
-  // categorias = ['Benchmark', 'Tutorial', 'Review', 'Notícia', 'Setup', 'Dicas'];
+  // --- NOVAS VARIÁVEIS DE PAGINAÇÃO ---
+  paginaAtual = signal<number>(1);
+  itensPorPagina = 6;
 
-  // computed() recalcula automaticamente sempre que termoBusca ou categoriaAtiva mudam.
-  // Combina os dois filtros: busca por texto + filtro por categoria.
-  videosFiltrados = this.todos
+  // 1. O computed de filtro por texto (já com a busca por descrição)
+  videosFiltrados = computed(() => {
+    const busca = this.termoBusca().toLowerCase();
+    const listaDeVideos = this.todos();
 
-  /**
-   *computed(() => {
-    const termo = this.termoBusca().toLowerCase().trim();
-    const cat = this.categoriaAtiva();
+    if (!busca) {
+      return listaDeVideos;
+    }
 
-    return this.todos().filter(v => {
-      // Verifica se o título contém o termo digitado (case-insensitive)
-      const bateuBusca = !termo || v.titulo.toLowerCase().includes(termo);
-      // // Verifica se a categoria bate com o filtro ativo ('' = todos)
-      // const bateuCategoria = !cat || v.categoria === cat;
-      // return bateuBusca && bateuCategoria;
-    });
-  }); 
-   
-   */
+    return listaDeVideos.filter(video => 
+      video.titulo.toLowerCase().includes(busca) || 
+      video.descricao.toLowerCase().includes(busca)
+    );
+  });
 
-  
+  // 2. NOVO COMPUTED: Fatiar a lista para a página atual
+  videosPaginados = computed(() => {
+    const inicio = (this.paginaAtual() - 1) * this.itensPorPagina;
+    const fim = inicio + this.itensPorPagina;
+    
+    return this.videosFiltrados().slice(inicio, fim);
+  });
+
+  // 3. NOVO COMPUTED: Calcular páginas para renderizar os botões
+  paginasArray = computed(() => {
+    const totalItens = this.videosFiltrados().length;
+    const totalPaginas = Math.ceil(totalItens / this.itensPorPagina);
+    
+    return Array.from({ length: totalPaginas }, (_, i) => i + 1);
+  });
+
   ngOnInit(): void {
-    // Carrega os vídeos da API quando o componente é inicializado
     this.videosService.getAll().subscribe({
       next: (res) => {
-        console.log(res)
         this.todos.set(res);
         this.isLoading.set(false);
       },
       error: () => {
-        // Em caso de erro, apenas encerra o carregamento
         this.isLoading.set(false);
       }
     });
   }
 
-  // Atualiza o signal de busca a partir do evento de input do campo de texto
   onBusca(event: Event): void {
     const input = event.target as HTMLInputElement;
     this.termoBusca.set(input.value);
+    this.paginaAtual.set(1); // Reseta a página para 1 sempre que pesquisar algo novo
   }
 
-  // Define a categoria ativa; chamar com '' remove o filtro
   definirCategoria(cat: string): void {
     this.categoriaAtiva.set(cat);
+    this.paginaAtual.set(1); // Reseta a página
   }
 
-  // Extrai o ID do vídeo de uma URL do YouTube e retorna a URL da thumbnail.
-  // Suporta os formatos: watch?v=ID e youtu.be/ID
+  // --- NOVAS FUNÇÕES DA PAGINAÇÃO ---
+  mudarPagina(pagina: number) {
+    this.paginaAtual.set(pagina);
+  }
+
+  paginaAnterior() {
+    if (this.paginaAtual() > 1) {
+      this.paginaAtual.update(p => p - 1);
+    }
+  }
+
+  proximaPagina() {
+    if (this.paginaAtual() < this.paginasArray().length) {
+      this.paginaAtual.update(p => p + 1);
+    }
+  }
+
+  // Mantido: lógica da miniatura do YouTube
   getThumbnail(url: string): string {
     let id = '';
-
     try {
       const urlObj = new URL(url);
       if (urlObj.hostname.includes('youtu.be')) {
-        // Formato curto: https://youtu.be/VIDEO_ID
         id = urlObj.pathname.slice(1);
       } else {
-        // Formato padrão: https://www.youtube.com/watch?v=VIDEO_ID
         id = urlObj.searchParams.get('v') || '';
       }
     } catch {
-      // URL inválida: retorna string vazia
       return '';
     }
-
-    // hqdefault = thumbnail de alta qualidade (480x360)
     return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
   }
 }

@@ -29,93 +29,94 @@
       />
     </div>
 
-    <!-- <div class="filtros-lista">
-      <!-- Botão "Todos" limpa o filtro de categoria ativo -->
-      <!-- <button
-        class="filtro-btn"
-        [class.ativo]="categoriaAtiva() === ''"
-        (click)="definirCategoria('')"
-      >Todos</button> -->
-
-      <!-- Botões gerados dinamicamente a partir das categorias disponíveis -->
-      <!-- @for (cat of categorias; track cat) {
-        <button
-          class="filtro-btn"
-          [class.ativo]="categoriaAtiva() === cat"
-          (click)="definirCategoria(cat)"
-        >{{ cat }}</button>
-      }
-    </div> -->
   </div>
 
   <!-- GRADE DE VÍDEOS -->
-  <section class="hardware-grid-container">
-    <p class="hardware-grid-titulo">Vídeos disponíveis:</p>
+<section class="hardware-grid-container">
+  <p class="hardware-grid-titulo">Vídeos disponíveis:</p>
 
-    <!-- Estado de carregamento -->
-    @if (isLoading()) {
-      <div class="estado-vazio">
-        <i class="fas fa-spinner fa-spin"></i>
-        <p>Carregando vídeos...</p>
-      </div>
-    }
+  <!-- Estado de carregamento -->
+  @if (isLoading()) {
+    <div class="estado-vazio">
+      <i class="fas fa-spinner fa-spin"></i>
+      <p>Carregando vídeos...</p>
+    </div>
+  }
 
-    <!-- Nenhum resultado encontrado -->
-    @else if (videosFiltrados().length === 0) {
-      <div class="estado-vazio">
-        <i class="fas fa-video-slash"></i>
-        <p>Nenhum vídeo encontrado.</p>
-      </div>
-    }
+  <!-- Nenhum resultado encontrado -->
+  @else if (videosFiltrados().length === 0) {
+    <div class="estado-vazio">
+      <i class="fas fa-video-slash"></i>
+      <p>Nenhum vídeo encontrado.</p>
+    </div>
+  }
 
-    <!-- Grid de cards de vídeo -->
-    @else {
-      <div class="grid-hardware">
-        @for (video of videosFiltrados(); track video.id) {
-          <article class="card-hardware animar-subir">
+  <!-- Grid de cards de vídeo (COM PAGINAÇÃO) -->
+  @else {
+    <div class="grid-hardware">
+      <!-- ATUALIZADO PARA USAR O videosPaginados() -->
+      @for (video of videosPaginados(); track video.id) {
+        <article class="card-hardware animar-subir">
 
-            <!-- Thumbnail do YouTube gerada automaticamente a partir do ID do vídeo -->
-            <div class="card-imagem video-thumb-container">
-              <img
-                [src]="getThumbnail(video.url)"
-                [alt]="'Thumbnail: ' + video.titulo"
-                class="video-thumb"
-              />
-              <!-- Ícone de play sobreposto na thumbnail -->
-              <div class="video-play-overlay">
-                <i class="fas fa-play"></i>
-              </div>
+          <div class="card-imagem video-thumb-container">
+            <img
+              [src]="getThumbnail(video.url)"
+              [alt]="'Thumbnail: ' + video.titulo"
+              class="video-thumb"
+            />
+            <div class="video-play-overlay">
+              <i class="fas fa-play"></i>
+            </div>
+          </div>
+
+          <div class="card-corpo">
+            <div class="info-principal">
+              <h2 class="modelo">{{ video.titulo }}</h2>
+              <p class="especificacao">{{ video.descricao }}</p>
             </div>
 
-            <!-- Corpo do card -->
-            <div class="card-corpo">
-              <!-- Badge com a categoria do vídeo -->
-              <!-- <span class="badge badge-sunset">
-                <i class="fas fa-tag"></i> {{ video.categoria }}
-              </span> -->
-
-              <div class="info-principal">
-                <h2 class="modelo">{{ video.titulo }}</h2>
-                <p class="especificacao">{{ video.descricao }}</p>
-              </div>
-
-              <!-- Botão que abre o vídeo no YouTube em nova aba -->
-              <div class="rodape-card">
-                <a
-                  [href]="video.url"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="btn-comprar"
-                >
-                  <i class="fab fa-youtube"></i> Assistir no YouTube
-                </a>
-              </div>
+            <div class="rodape-card">
+              <a
+                [href]="video.url"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-comprar"
+              >
+                <i class="fab fa-youtube"></i> Assistir no YouTube
+              </a>
             </div>
+          </div>
 
-          </article>
+        </article>
+      }
+    </div>
+
+    <!-- PAGINAÇÃO DINÂMICA ADICIONADA AQUI -->
+    @if (paginasArray().length > 1) {
+      <div class="paginacao">
+        <button 
+          class="paginacao-btn" 
+          (click)="paginaAnterior()" 
+          [disabled]="paginaAtual() === 1">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+    
+        @for (pag of paginasArray(); track pag) {
+          <button 
+            class="paginacao-btn" 
+            [class.ativo]="paginaAtual() === pag"
+            (click)="mudarPagina(pag)">
+            {{ pag }}
+          </button>
         }
+    
+        <button 
+          class="paginacao-btn" 
+          (click)="proximaPagina()" 
+          [disabled]="paginaAtual() === paginasArray().length">
+          <i class="fas fa-chevron-right"></i>
+        </button>
       </div>
     }
-  </section>
-
-</main>
+  }
+</section>

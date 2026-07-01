@@ -236,7 +236,6 @@ button.btn-painel {
 .banner-svg-deco {
   width: 280px;
   height: 175px;
-  opacity: 0.18;
   filter: drop-shadow(0 0 18px rgba(236, 72, 153, 0.3));
 }
 
